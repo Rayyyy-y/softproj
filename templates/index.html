@@ -1,0 +1,1170 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>海洋牧场智能中心</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link href="https://cdn.bootcdn.net/ajax/libs/video.js/5.15.0/video-js.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/video.js/5.15.0/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.min.js" type="text/javascript"></script>
+</head>
+<style>
+    body {
+        background-color: #f2f2f2; /* 浅灰色背景 */
+    }
+    
+    .boxRader {
+        position: relative;
+        width: 100%;
+        height: 80%;
+    }
+
+    .centerBox {
+        width: 75%;
+        margin-right: 15px;
+        background: transparent;
+    }
+
+    .boxFont {
+        font-size: 1.2vw;
+    }
+
+    .centerMainBox1 {
+        width: 100%;
+        height: 60.5%;
+    }
+
+    .centerMainBox2 {
+        width: 100%;
+        height: 38.5%;
+        position: relative;
+        margin-top: 15px;
+    }
+
+    .centerMainBox2 img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .boxTitle2 {
+        width: 100%;
+        height: 10%;
+        font-size: .6vw;
+        text-align: center;
+        line-height: 10%;
+        margin-top: 1vw;
+        color: #260eff;
+    }
+
+    .boxLis {
+        width: 70%;
+        height: 1.5vw;
+        margin-left: 3vw;
+        margin-top: 1vw;
+        border-bottom: .02vw solid rgb(40, 104, 233);
+    }
+
+    .boxLis>li {
+        width: 4vw;
+        height: 1.4vw;
+        display: block;
+        background: rgba(40, 53, 233, 0.5);
+        margin-right: .5vw;
+        color: #fff;
+        line-height: 1.4vw;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .active {
+        border-bottom: .02vw solid #040A18;
+        border-top: .02vw solid rgb(8, 21, 70);
+        border-right: .02vw solid rgb(8, 21, 70);
+        border-left: .02vw solid rgb(8, 21, 70);
+    }
+
+    .contList {
+        position: relative;
+        width: 70%;
+        height: 7vw;
+        margin: 1vw auto 0;
+
+    }
+
+    .content1 li {
+        display: none;
+    }
+
+    .baseBox {
+        width: 100%;
+        border: none;
+        background: none;
+    }
+
+    .boxTitle {
+        font-size: .8vw;
+        width: 38%;
+        margin-top: 1vw;
+        text-align: center;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .baseBoxLeft {
+        width: 30%;
+        height: 95%;
+        position: relative;
+    }
+
+    .baseBoxRight {
+        width: 68%;
+        height: 75%;
+    }
+
+    .baseBoxLeft img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .maps {
+        width: 100%;
+        height: 95%;
+        margin-top: 2%;
+        background: pink;
+    }
+
+    .baseBox1,
+    .baseBox2,
+    .baseBox3 {
+        position: relative;
+    }
+
+    .baseBox1 img,
+    .baseBox2 img,
+    .baseBox3 img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .csbaseBox1 {
+        position: relative;
+        z-index: 999;
+    }
+</style>
+<!-- 黄瑶 -->
+<style>
+    .liSpan {
+        width: 100%;
+        margin-top: 3.2%;
+        text-align: center;
+        color: rgb(40, 229, 233);
+    }
+
+    .liP {
+        width: 66%;
+        margin: .3vw auto 0;
+        text-align: left;
+        font-size: .5vw;
+        color: rgb(40, 101, 233);
+    }
+
+    a:hover {
+        text-decoration: none
+    }
+
+    .titleName {
+        color: #0e7eff;
+    }
+
+    /* 种植 */
+    .plant {
+        width: 90%;
+        height: 5.5vw;
+        margin: 2% auto 0;
+        display: -webkit-flex;
+        display: -moz-flex;
+        -webkit-justify-content: space-between;
+        -moz-justify-content: space-between;
+    }
+
+    .plant>li {
+        width: 15%;
+        height: 100%;
+    }
+
+    .jumps {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 235, 255, .08);
+        display: -webkit-flex;
+        -webkit-flex-direction: column;
+        -webkit-justify-content: space-between;
+        display: -moz-flex;
+        -moz-flex-direction: column;
+        -moz-justify-content: space-between;
+    }
+
+    .jumps>div>img {
+        width: .88vw;
+        height: .88vw;
+        float: right;
+    }
+
+    .jumps>p {
+        width: 90%;
+        font-size: 1.3vw;
+        color: #fff;
+        margin: auto;
+
+    }
+
+    .jumps>div {
+        width: 90%;
+        margin: 5% auto 0;
+    }
+
+    .jumps>div>span {
+        font-size: .6vw;
+        color: #0e56ff;
+        float: left;
+    }
+
+    .spans0 {
+        width: 80%;
+        height: 5%;
+        background: #03DA8D;
+    }
+
+    .spans1 {
+        width: 80%;
+        height: 5%;
+        background: #0efcff;
+    }
+
+    .spans2 {
+        width: 80%;
+        height: 5%;
+        background: #FE0000;
+    }
+
+    .spans3 {
+        width: 80%;
+        height: 5%;
+        background: #F78001;
+    }
+
+    .boxVideo {
+        width: 100%;
+        height: 100%;
+    }
+
+    .boxVideo video {
+        width: 100%;
+        height: 100%;
+
+    }
+
+    .baseDatas {
+        width: 70%;
+        height: 2vw;
+        display: -webkit-flex;
+        -webkit-justify-content: space-between;
+        margin: 1vw 0 0 5vw;
+
+    }
+
+    .baseDatas li {
+        width: 10%;
+    }
+
+    .baseDatas li a {
+        color: #fff;
+        font-size: .8vw;
+    }
+
+    .active2 a>span {
+        color: rgb(40, 229, 233);
+    }
+
+    .baseDatas li a:hover>span {
+        color: rgb(40, 229, 233);
+    }
+
+    .baseDatas li a:hover>.borderRight {
+        border-left-color: rgb(40, 229, 233);
+    }
+
+    .tableDetalis {
+        width: 92%;
+        color: #fff;
+        margin-left: 2vw;
+    }
+
+    .tableDetalis tr {
+        height: 1.3vw;
+        font-size: .8vw;
+    }
+
+    .tableDetalis tr>td {
+        text-align: center;
+    }
+
+    .tableDetalis tr>td:nth-child(7) {
+        text-align: right;
+    }
+
+    .borderRight {
+        width: 0;
+        height: 0;
+        float: left;
+        border: .4vw solid transparent;
+        border-left-color: #fff;
+        margin-top: .2vw;
+    }
+
+    .borderActive {
+        border-left-color: rgb(40, 133, 233);
+    }
+
+    .equipment_table {
+        width: 85%;
+        height: 25%;
+        margin: auto;
+        text-align: center;
+        color: #fff;
+        font-size: .5vw;
+    }
+
+    .equipment_table tr:nth-child(1) {
+        color: #0EFCFF;
+    }
+
+    .equipment_table tr {
+        border: 1px solid#0EFCFF;
+    }
+
+    .equipment_table tr:nth-child(1) {
+        font-size: .8vw;
+    }
+
+    .equipment_table img {
+        width: 1vw;
+    }
+
+    .env_table {
+        height: 35%;
+        margin-top: 5%;
+    }
+
+    .env_table td {
+        border: 1px solid#0e3eff;
+    }
+
+    .env_table tr:nth-child(1) {
+        background: rgba(14, 252, 255, .3);
+    }
+
+    .map img {
+        width: 80%;
+        margin-left: 10%;
+    }
+
+    .map img {
+        width: 80%;
+        margin-left: 10%;
+    }
+
+    .mapActived1 {
+        position: absolute;
+        top: 41.5%;
+        left: 61%;
+        width: 3.5vw;
+        height: 5.5vw;
+        border-radius: 90px;
+        cursor: pointer;
+    }
+
+    .mapActived2 {
+        position: absolute;
+        top: 60%;
+        right: 16%;
+        width: 4.5vw;
+        height: 2.5vw;
+        cursor: pointer;
+    }
+
+    .mapActived3 {
+        position: absolute;
+        top: 57%;
+        right: 9%;
+        width: 2.5vw;
+        height: 7vw;
+        cursor: pointer;
+    }
+
+    .mapContent1 {
+        position: absolute;
+        height: 6vw;
+        width: 8vw;
+        left: 65%;
+        top: 33%;
+        background: rgba(255, 255, 255, .2);
+    }
+
+    .mapContent2 {
+        position: absolute;
+        height: 6vw;
+        width: 8vw;
+        left: 70%;
+        top: 35%;
+        background: rgba(255, 255, 255, .2);
+        display: none;
+    }
+
+    .mapContent3 {
+        position: absolute;
+        height: 6vw;
+        width: 8vw;
+        right: 1%;
+        top: 35%;
+        background: rgba(255, 255, 255, .2);
+        display: none;
+    }
+
+
+    .mapContentFont {
+        width: 85%;
+        margin-left: 12%;
+        font-size: .6vw;
+        color: #0e62ff;
+        letter-spacing: .05vw;
+        margin-bottom: .3vw;
+    }
+
+    .mapContentFont:nth-child(1) {
+        margin-top: .6vw;
+    }
+
+    .mapContentFont span {
+        color: white;
+    }
+
+    /* lafite video样式 */
+    .video-js {
+        width: 100%;
+        height: 100%;
+    }
+    .video-js:hover .vjs-big-play-button {
+        background: none;
+    }
+    .video-js .vjs-big-play-button:hover {
+        background: none;
+    }
+    .video-js .vjs-big-play-button {
+        border: none;
+        background: none;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fish data
+        var baifenbi = {{ count|tojson }};
+        var grayBar = Array(baifenbi.length).fill(1);
+        var zongjine = Array(baifenbi.length).fill(500);
+        var xingm = {{ species|tojson }}.reverse();
+
+        // Weather data
+        var temperature = {{ weather.temperature }};
+        var humidity = {{ weather.humidity }};
+        var wind_speed = {{ weather.wind_speed }};
+        var precipitation = {{ weather.precipitation }};
+
+        console.log(baifenbi);
+        console.log(grayBar);
+        console.log(zongjine);
+        console.log(xingm);
+
+        console.log('Temperature:', temperature);
+        console.log('Humidity:', humidity);
+        console.log('Wind Speed:', wind_speed);
+        console.log('Precipitation:', precipitation);
+    });
+</script>
+<body>
+    <div class="main">
+        <div class="nav">海洋牧场智能中心</div>
+        <div class="nav_btn">
+            <div class="btn_left">
+                <a href="https://www.agedm.org">
+                    <div class="btn_list listActive">智能中心</div>
+                </a>
+                <a href="https://www.agedm.org">
+                    <div class="btn_list">水下系统</div>
+                </a>
+                <a href="https://www.agedm.org">
+                    <div class="btn_list">智能中心</div>
+                </a>
+                <a href="https://www.agedm.org">
+                    <div class="btn_list">主要信息</div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="centerBox">
+                <div class="baseBox centerMainBox1" style="height:70%">
+                    <div class="baseBoxLeft left">
+                        <div class="boxTitle">气象数据监测</div>
+                        <img src="../static/img/left.png" alt="">
+                        <table class="equipment_table env_table">
+                            <tr>
+                                <td>指标</td>
+                                <td>标准值</td>
+                                <td>当前值</td>
+                                <td>预警</td>
+                            </tr>
+                            <tr>
+                                <td>浊度</td>
+                                <td>30-40%</td>
+                                <td>{{ weather.temperature }}%</td>
+                                <td>{{ '正常'  }}</td>
+                            </tr>
+                            <tr>
+                                <td>水温</td>
+                                <td>10℃-25℃</td>
+                                <td>{{ weather.humidity }}℃</td>
+                                <td>{{ '正常'  }}</td>
+                            </tr>
+                            <tr>
+                                <td>pH</td>
+                                <td>7-9</td>
+                                <td>{{ weather.wind_speed }}</td>
+                                <td>{{ '正常'  }}</td>
+                            </tr>
+                            <tr>
+                                <td>溶解氧</td>
+                                <td>8.3mg/L-11.3mg/L</td>
+                                <td>{{ weather.precipitation }}mg/L</td>
+                                <td>{{ '正常'  }}</td>
+                            </tr>
+                        </table>
+                        <div style="width:95%;height:50%;margin-left:2.5%" id="wind"></div>
+                    </div>
+                    <div class="baseBoxRight right">
+                        <ul class="plant">
+                            <li>
+                                <a class="jumps" href="">
+                                    <div>
+                                        <span>海洋牧场面积(亩)</span>
+                                        <img src="../static/img/qqzmj.png" alt="">
+                                    </div>
+                                    <p class="">3500</p>
+                                    <span class="spans3"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="jumps" href="">
+                                    <div>
+                                        <span>产值(亿元)</span>
+                                        <img src="../static/img/ccc2.png" alt="">
+                                    </div>
+                                    <p class="">180</p>
+                                    <span class="spans2" style="background: #499BFF;"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="jumps" href="">
+                                    <div>
+                                        <span>产量（千条）</span>
+                                        <img src="../static/img/ccc.png" alt="">
+                                    </div>
+                                    <p class="">82000</p>
+                                    <span class="spans3" style="background: #F2CE43;"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="jumps" href="./teaGarden.html">
+                                    <div class="clear plantTop ">
+                                        <span class="flexLeft">渔场(个)</span>
+                                        <img class="flexright" src="../static/img/cy.png" alt="">
+                                    </div>
+
+                                    <p class=" plantNum1">5</p>
+                                    <span class="spans0"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="jumps" href="./Tea-enterprises.html">
+                                    <div class="clear plantTop ">
+                                        <span class="flexLeft">养殖鱼种类（种）</span>
+                                        <img class="flexright" src="../static/img/cq.png" alt="">
+                                    </div>
+                                    <p class=" plantNum1">157</p>
+                                    <span class="spans1"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="jumps" href="./teaPeasant.html">
+                                    <div>
+                                        <span>渔民(人)</span>
+                                        <img src="../static/img/cn.png" alt="">
+                                    </div>
+                                    <p class="">360</p>
+                                    <span class="spans2"></span>
+                                </a>
+                            </li>
+
+                        </ul>
+                        <!-- 地图 -->
+                        <div class="map">
+                            <img class="mapImg" src="../static/img/map1.png">
+                            <div class="mapContent1">
+                                <div class="mapContentFont">一号牧场</div>
+                                <div class="mapContentFont">
+                                    海洋牧场面积:<span>101</span>
+                                </div>
+                                <div class="mapContentFont">
+                                    渔民:<span>10</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="baseBox centerMainBox2" style="height:30%;">
+                    <img src="../static/img/down.png" alt="">
+                    <div class="boxTitle2" style="width:26%">统计数据</div>
+                    <div class="csbaseBox1">
+                        <ul class="baseDatas">
+                            <li class="left ">
+                                <a style="color: #0efcff">
+                                    <div class="borderRight "></div>
+                                    <span>牧场统计</span>
+                                </a>
+                            </li>
+                            <li class="left">
+                                <a style="color: #0efcff">
+                                    <div class="borderRight "></div>
+                                    <span>鱼类统计</span>
+                                </a>
+                            </li>
+                            <li class="left">
+                                <a style="color: #0efcff">
+                                    <div class="borderRight "></div>
+                                    <span>渔民统计</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <table class="tableDetalis" style="color: #00ddfe">
+                            <tr>
+                                <td>名称</td>
+                                <td>类型</td>
+                                <td>面积</td>
+                                <td>名称</td>
+                                <td>类型</td>
+                                <td>面积</td>
+                                <td>姓名&nbsp&nbsp</td>
+                                <td>品种</td>
+                                <td>面积</td>
+                            </tr>
+                            <tr>
+                                <td>一号牧场</td>
+                                <td>企业</td>
+                                <td>1800亩</td>
+                                <td>大黄鱼</td>
+                                <td>私营</td>
+                                <td>32亩</td>
+                                <td>刘新武</td>
+                                <td>虾</td>
+                                <td>10亩</td>
+                            </tr>
+                            <tr>
+                                <td>二号牧场 </td>
+                                <td>企业</td>
+                                <td>380亩</td>
+                                <td>鲈鱼</td>
+                                <td>私营</td>
+                                <td>62亩</td>
+                                <td>张方</td>
+                                <td>黄鱼</td>
+                                <td>15亩</td>
+                            </tr>
+                            <tr>
+                                <td>三号牧场</td>
+                                <td>企业</td>
+                                <td>510亩</td>
+                                <td>石斑鱼</td>
+                                <td>私营</td>
+                                <td>58亩</td>
+                                <td>李小维</td>
+                                <td>鲈鱼</td>
+                                <td>12亩</td>
+                            </tr>
+                            <tr>
+                                <td>四号牧场</td>
+                                <td>个人</td>
+                                <td>17亩</td>
+                                <td>鲷鱼</td>
+                                <td>私营</td>
+                                <td>30亩</td>
+                                <td>王骁骁</td>
+                                <td>鲈鱼</td>
+                                <td>11亩</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="leftBox right" style="width:22%">
+                <div class="baseBox baseBox1" style="margin-bottom:15px;height:40%">
+                    <img src="../static/img/right.png" alt="">
+                    <div class="csbaseBox1">
+                        <div class="boxTitle">视频监控设备</div>
+                        <ul class="boxLis">
+                            <li class="left active">一号监控</li>
+                            <li class="left">二号监控</li>
+                            <li class="left">三号监控</li>
+                        </ul>
+                        <div class="content1">
+                            <ul>
+                                <li style="display: block;" class="contList">
+                                    <!-- 四个角描边 stat -->
+                                    <div class="leftTopLine1"></div>
+                                    <div class="leftTopLine2"></div>
+                                    <div class="rightTopLine1"></div>
+                                    <div class="rightTopLine2"></div>
+                                    <div class="leftBottomLine1"></div>
+                                    <div class="leftBottomLine2"></div>
+                                    <div class="rightBottomLine1"></div>
+                                    <div class="rightBottomLine2"></div>
+
+                                    <div class="boxVideo">
+                                        <video class="video-js vjs-big-play-centered" data-setup='{}' controls>
+                                            <source src="http://hls01open.ys7.com/openlive/ea2001c1aec344d1ac45d8b0bbc74e87.m3u8" type="application/x-mpegURL">
+                                        </video>
+                                    </div>
+                                </li>
+                                <li class="contList">
+                                    <!-- 四个角描边 stat -->
+                                    <div class="leftTopLine1"></div>
+                                    <div class="leftTopLine2"></div>
+                                    <div class="rightTopLine1"></div>
+                                    <div class="rightTopLine2"></div>
+                                    <div class="leftBottomLine1"></div>
+                                    <div class="leftBottomLine2"></div>
+                                    <div class="rightBottomLine1"></div>
+                                    <div class="rightBottomLine2"></div>
+
+                                    <div class="boxVideo">
+                                        <video class="video-js vjs-big-play-centered" data-setup='{}' controls>
+                                            <source src="http://hls01open.ys7.com/openlive/cf40f99cc9cb4a23bd52e0b2119b534c.m3u8" type="application/x-mpegURL">
+                                        </video>
+                                    </div>
+                                </li>
+                                <li class="contList">
+                                    <!-- 四个角描边 stat -->
+                                    <div class="leftTopLine1"></div>
+                                    <div class="leftTopLine2"></div>
+                                    <div class="rightTopLine1"></div>
+                                    <div class="rightTopLine2"></div>
+                                    <div class="leftBottomLine1"></div>
+                                    <div class="leftBottomLine2"></div>
+                                    <div class="rightBottomLine1"></div>
+                                    <div class="rightBottomLine2"></div>
+
+                                    <div class="boxVideo">
+                                        <video
+                                            src="#"
+                                            controls="controls">
+                                            your browser does not support the video tag
+                                        </video>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="liSpan">介绍</div>
+                        <p class="liP">渔场环境远程监控物联网系统能够支持客户端访问方式提供远程监测与控制管理</p>
+                    </div>
+                </div>
+                <div class="baseBox baseBox2" style="margin-bottom:15px;height:29.5%">
+                    <img src="../static/img/right2.png" alt="">
+                    <!-- 四个角描边 end -->
+                    <div class="boxTitle2">种植品种分析</div>
+                    <div class="boxRader" id="Progress"></div>
+                </div>
+                <div class="baseBox baseBox3" style="height:28.9%">
+                    <img src="../static/img/right3.png" alt="">
+                    <!-- 四个角描边 end -->
+                    <div class="boxTitle2">鱼类销量分析</div>
+                    <div class="boxRader" id="mains"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.0-beta.2/echarts.min.js"></script>
+<script src="js/dataScoll.js"></script>
+<script>
+    // 地图hover事件
+    function HoverFn() {
+        $('.mapActived1').hover(function () {
+            $(".mapImg").attr("src", "../static/img/map1.png");
+            $(".mapContent1,.mapContent2,.mapContent3").hide();
+            $(".mapContent1").slideDown(500);
+        }, function () {
+
+        });
+    }
+    HoverFn()
+</script>
+<script>
+    $('.boxLis').on('mouseenter', 'li', function () {
+
+        var that = $(this);
+
+        that.addClass('active').siblings().removeClass('active');
+
+        $('.content1 .contList').hide();
+
+        console.log($('.content1 li'))
+
+        $('.content1 .contList').eq(that.index()).show()
+
+
+    })
+</script>
+<script>
+    var HYChart1 = echarts.init(document.getElementById('wind'));
+    var HYChart2 = echarts.init(document.getElementById('Progress'));
+    var HYChart3 = echarts.init(document.getElementById('mains'));
+    let colors = ['#FF6863', '#6EAB40', '#3BB5F5'];
+
+
+    // 准备图表的数据结构
+    var option = {
+        title: {
+            text: '水质监测数据'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['电导率', '高锰酸盐指数', '总氮']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['北排水河防潮闸', '北洋桥', '沧浪渠出境', '曹庄子泵站', '大红桥', '大套桥', '于桥水库库中心']  // 从 waterData 提取的断面名称
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: {{ water | tojson }}  // 从 waterData 提取的系列数据
+    };
+
+    HYChart1.setOption(option);
+
+
+
+    // 进度条
+
+    var baifenbi = {{ count|tojson }};
+    var grayBar = Array(baifenbi.length).fill(1);
+    var zongjine = Array(baifenbi.length).fill(500);
+    var xingm = {{ species|tojson }}.reverse();
+
+    console.log(baifenbi);
+    console.log(grayBar);
+    console.log(zongjine);
+    console.log(xingm);
+    // console.log(xingm.reverse())
+
+    option2 = {
+
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '30%',
+            right: '5%',
+            top: '0%',
+            bottom: '0%',
+        },
+        backgroundColor: 'transparent',
+        xAxis: [{
+            show: false,
+        },
+        //由于下边X轴已经是百分比刻度了,所以需要在顶部加一个X轴,刻度是金额,也隐藏掉
+        {
+            show: false,
+        }
+        ],
+        yAxis: {
+            type: 'category',
+            axisLabel: {
+                show: false, //让Y轴数据不显示
+            },
+            itemStyle: {
+
+            },
+            axisTick: {
+                show: false, //隐藏Y轴刻度
+            },
+            axisLine: {
+                show: false, //隐藏Y轴线段
+            },
+            data: xingm,
+        },
+        series: [
+            //背景色--------------------我是分割线君------------------------------//
+
+            {
+                show: true,
+                type: 'bar',
+                barGap: '-100%',
+                barWidth: '40%', //统计条宽度 
+                itemStyle: {
+                    normal: {
+                        color: '#3B4254'
+                    },
+                },
+                z: 1,
+                // data: grayBar,
+            },
+            //蓝条--------------------我是分割线君------------------------------//
+            {
+                show: true,
+                type: 'bar',
+                barGap: '-100%',
+                barWidth: '40%', //统计条宽度
+                itemStyle: {
+                    color: function (params) {
+                        var colorList = ['#0EFCFF', '#1AC5CC', '#288E9A', '#FA8100', '#C06F18'].reverse();
+                        return colorList[params.dataIndex]
+                    },
+                },
+                max: 1,
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff', //百分比颜色
+                            fontSize: 8
+                        },
+                        position: 'right',
+                        //百分比格式
+                        formatter: function (data) {
+                            return (baifenbi[data.dataIndex]);
+                        },
+                    }
+                },
+                labelLine: {
+                    show: false,
+                },
+                z: 2,
+                data: baifenbi,
+            },
+            //数据条--------------------我是分割线君------------------------------//
+            {
+                show: true,
+                type: 'bar',
+                xAxisIndex: 1, //代表使用第二个X轴刻度!!!!!!!!!!!!!!!!!!!!!!!!
+                barGap: '-100%',
+                barWidth: '40%', //统计条宽度
+                itemStyle: {
+                    normal: {
+                        barBorderRadius: 200,
+                        color: 'transparent'
+                    },
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        //label 的position位置可以是top bottom left,right,也可以是固定值
+                        //在这里需要上下统一对齐,所以用固定值
+                        position: ["-38%", '5%'],
+                        rich: { //富文本
+                            color: { //自定义颜色
+                                color: '#1BC5CC',
+                                fontSize: 12
+                            },
+                            value: xingm,
+                            start1: {
+                            },
+
+                        },
+                        formatter: function (data) {
+                            //富文本固定格式{colorName|这里填你想要写的内容}
+                            return '{start1|}{color|' + xingm[data.dataIndex] + '}'
+
+                        },
+                    }
+                },
+                data: zongjine
+            }
+
+        ]
+    };
+
+    option3 = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            x: 'center',
+            data: ['销售', '销售额'],
+            textStyle: {
+                color: "#fff",
+                fontSize: 12
+            },
+            itemWidth: 8,
+            itemHeight: 8,
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                data: ['2019', '2020', '2021', '2022', '2023'],
+                axisLabel: {
+                    textStyle: {
+                        color: 'rgba(255,255,255,.2)',
+                        // opacity: 0.1,
+                    }
+                },
+                "axisTick": {       //y轴刻度线
+                    "show": false
+                },
+                "axisLine": {       //y轴
+                    "show": false,
+                },
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                scale: true,
+                name: "销量(吨)",
+                nameTextStyle: {
+                    color: 'rgba(255,255,255,.2)',
+                },
+                max: 100000,
+                min: 0,
+                boundaryGap: [0.2, 0.2],
+                "axisTick": {       //y轴刻度线
+                    "show": false
+                },
+                "axisLine": {       //y轴
+                    "show": false,
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: 'rgba(255,255,255,.2)',
+                        // opacity: 0.1,
+                    }
+                },
+                splitLine: {  //决定是否显示坐标中网格
+                    show: true,
+                    lineStyle: {
+                        color: ['#fff'],
+                        opacity: 0.2
+                    }
+                },
+            },
+            {
+                type: 'value',
+                scale: true,
+                name: "销量额(万元)",
+                nameTextStyle: {
+                    color: 'rgba(255,255,255,.2)',
+                },
+                max: 600000,
+                min: 0,
+                boundaryGap: [0.2, 0.2],
+                "axisTick": {       //y轴刻度线
+                    "show": false
+                },
+                "axisLine": {       //y轴
+                    "show": false,
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: 'rgba(255,255,255,.2)',
+                        // opacity: 0.1,
+                    }
+                },
+                splitLine: {  //决定是否显示坐标中网格
+                    show: false,
+                    lineStyle: {
+                        color: ['#fff'],
+                        opacity: 0.2
+                    }
+                },
+
+            }
+        ],
+        color: ['#0efcff', '#F45E23'],
+        grid: {
+            left: '3%',
+            right: '4%',
+            top: '25%',
+            bottom: '5%',
+            containLabel: true
+        },
+        series: [
+            {
+                name: '销售',
+                type: 'bar',
+                data: [47800, 55000, 63580, 70000, 82000],
+            },
+            {
+                name: '销售额',
+                type: 'bar',
+                data: [28680, 33000, 38148, 45500, 53300],
+            }
+        ]
+    };
+
+    HYChart1.setOption(option)
+    HYChart2.setOption(option2)
+    HYChart3.setOption(option3)
+
+    setInterval(function () {
+        numInit();
+        HYChart1.clear();
+        HYChart2.clear();
+        HYChart3.clear();
+
+        HYChart1.setOption(option);
+        HYChart2.setOption(option2);
+        HYChart3.setOption(option3);
+
+    }, 7000)
+</script>
